@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/settings_fragment"
     android:layout_width="match_parent"
@@ -11,7 +10,10 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:divider="?android:attr/dividerHorizontal"
+        android:showDividers="middle"
+        android:dividerPadding="15dp">
 
         <EditText
             android:id="@+id/textMail"
@@ -20,7 +22,8 @@
             android:padding="16dp"
             android:ems="10"
             android:hint="Mail"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:background="@drawable/input" />
 
         <EditText
             android:id="@+id/textPassword"
@@ -29,20 +32,24 @@
             android:padding="16dp"
             android:ems="10"
             android:hint="Password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:background="@drawable/input" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonSignin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="Sign In" />
+            android:text="SIGN IN"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rectangle2" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonRegisterSender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Register" />
+            android:text="REGISTER"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rectangle2" />
 
     </LinearLayout>
 
@@ -54,7 +61,10 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:divider="?android:attr/dividerHorizontal"
+        android:showDividers="middle"
+        android:dividerPadding="15dp">
 
         <EditText
             android:id="@+id/textRegisterMail"
@@ -62,7 +72,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Mail"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"
+            android:background="@drawable/input" />
 
         <EditText
             android:id="@+id/textRegisterPassword"
@@ -70,21 +81,24 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Password"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:background="@drawable/input" />
 
         <EditText
             android:id="@+id/textRegisterName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="First Name" />
+            android:hint="First Name"
+            android:background="@drawable/input" />
 
         <EditText
             android:id="@+id/textRegisterSurname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Surname" />
+            android:hint="Surname"
+            android:background="@drawable/input" />
 
         <EditText
             android:id="@+id/textRegisterPhone"
@@ -92,7 +106,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Phone"
-            android:inputType="phone" />
+            android:inputType="phone"
+            android:background="@drawable/input" />
 
         <EditText
             android:id="@+id/editTextRegisterBirthDate"
@@ -100,20 +115,24 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Birth Date"
-            android:inputType="date" />
+            android:inputType="date"
+            android:background="@drawable/input" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="Register" />
+            android:text="REGISTER"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rectangle2" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonRegisterBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sign In" />
+            android:text="SIGN IN"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rectangle2" />
 
     </LinearLayout>
 
@@ -125,21 +144,25 @@
         android:orientation="vertical"
         android:visibility="gone"
         android:gravity="center"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:divider="?android:attr/dividerHorizontal"
+        android:showDividers="middle"
+        android:dividerPadding="15dp">
 
         <TextView
             android:id="@+id/textUserEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mail"
-            android:textSize="18sp"
-            android:layout_marginBottom="24dp" />
+            android:textSize="18sp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonSignout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Exit" />
+            android:text="SIGN OUT"
+            android:textColor="@android:color/white"
+            android:background="@drawable/rectangle2" />
     </LinearLayout>
 
 </FrameLayout>

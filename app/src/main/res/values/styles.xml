@@ -1,0 +1,6 @@
+<resources>
+    <style name="CustomButton" parent="Widget.AppCompat.Button">
+        <item name="backgroundTint">@null</item>
+        <item name="android:background">@drawable/rectangle2</item>
+    </style>
+</resources>
