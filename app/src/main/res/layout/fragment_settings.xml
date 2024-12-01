@@ -15,25 +15,35 @@
         android:showDividers="middle"
         android:dividerPadding="15dp">
 
-        <EditText
-            android:id="@+id/textMail"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textMailLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:ems="10"
-            android:hint="Mail"
-            android:inputType="textEmailAddress"
-            android:background="@drawable/input" />
+            android:hint="Mail">
 
-        <EditText
-            android:id="@+id/textPassword"
+            <EditText
+                android:id="@+id/textMail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:inputType="textEmailAddress"
+                android:background="@drawable/input" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textPasswordLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:background="@drawable/input" />
+            android:hint="Password">
+
+            <EditText
+                android:id="@+id/textPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:inputType="textPassword"
+                android:background="@drawable/input" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonSignin"
@@ -50,7 +60,6 @@
             android:text="REGISTER"
             android:textColor="@android:color/white"
             android:background="@drawable/rectangle2" />
-
     </LinearLayout>
 
     <!-- Register -->
@@ -66,29 +75,38 @@
         android:showDividers="middle"
         android:dividerPadding="15dp">
 
-        <EditText
-            android:id="@+id/textRegisterMail"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textRegisterMailLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Mail"
-            android:inputType="textEmailAddress"
-            android:background="@drawable/input" />
+            android:hint="Mail">
 
-        <EditText
-            android:id="@+id/textRegisterPassword"
+            <EditText
+                android:id="@+id/textRegisterMail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:background="@drawable/input" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textRegisterPasswordLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:background="@drawable/input" />
+            android:hint="Password">
+
+            <EditText
+                android:id="@+id/textRegisterPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:background="@drawable/input" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <EditText
             android:id="@+id/textRegisterName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:hint="First Name"
             android:background="@drawable/input" />
 
@@ -96,7 +114,6 @@
             android:id="@+id/textRegisterSurname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:hint="Surname"
             android:background="@drawable/input" />
 
@@ -104,7 +121,6 @@
             android:id="@+id/textRegisterPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:hint="Phone"
             android:inputType="phone"
             android:background="@drawable/input" />
@@ -113,7 +129,6 @@
             android:id="@+id/editTextRegisterBirthDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:hint="Birth Date"
             android:inputType="date"
             android:background="@drawable/input" />
@@ -133,7 +148,6 @@
             android:text="SIGN IN"
             android:textColor="@android:color/white"
             android:background="@drawable/rectangle2" />
-
     </LinearLayout>
 
     <!-- Signed in -->
@@ -164,5 +178,4 @@
             android:textColor="@android:color/white"
             android:background="@drawable/rectangle2" />
     </LinearLayout>
-
 </FrameLayout>

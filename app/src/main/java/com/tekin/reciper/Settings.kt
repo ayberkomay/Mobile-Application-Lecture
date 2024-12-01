@@ -1,164 +1,63 @@
 package com.tekin.reciper
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+import com.tekin.reciper.CredentialsManagerTest
+import com.google.android.material.textfield.TextInputLayout
 import com.tekin.reciper.databinding.FragmentSettingsBinding
-
 
 class Settings : Fragment(R.layout.fragment_settings) {
 
-    private lateinit var auth: FirebaseAuth
     private lateinit var binding: FragmentSettingsBinding
-    private var backToRegisterOnce: Boolean = false
-
     private val credentialsManager = CredentialsManager()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSettingsBinding.bind(view)
-        auth = FirebaseAuth.getInstance()
 
-        val user = auth.currentUser
-        val usersRef = FirebaseDatabase.getInstance().getReference("users")
+        credentialsManager.register("test@te.st", "1234")
 
-        val signedInLayout = binding.layoutSignedIn
-        val signedOutLayout = binding.layoutSignedOut
-        val registerLayout = binding.layoutRegister
+        binding.buttonSignin.setOnClickListener {
+            val email = binding.textMail.text.toString().trim()
+            val password = binding.textPassword.text.toString().trim()
 
-        if (user != null) {
-            signedInLayout.visibility = View.VISIBLE
-            signedOutLayout.visibility = View.GONE
-            registerLayout.visibility = View.GONE
+            val emailLayout = binding.textMailLayout
+            val passwordLayout = binding.textPasswordLayout
 
-            binding.textUserEmail.text = user.email
-
-            binding.buttonSignout.setOnClickListener {
-                auth.signOut()
-                signedInLayout.visibility = View.GONE
-                signedOutLayout.visibility = View.VISIBLE
-                registerLayout.visibility = View.GONE
-            }
-
-        } else {
-            signedInLayout.visibility = View.GONE
-            signedOutLayout.visibility = View.VISIBLE
-            registerLayout.visibility = View.GONE
-
-            val btnSignin = binding.buttonSignin
-            val btnRegisterSender = binding.buttonRegisterSender
-
-            btnSignin.setOnClickListener {
-                val email = binding.textMail.text.toString().trim()
-                val password = binding.textPassword.text.toString().trim()
-
-                if (credentialsManager.isValidEmail(email) && credentialsManager.isValidPassword(password)) {
-                    auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { signin ->
-                        if (signin.isSuccessful) {
-                            val currentUser = auth.currentUser
-                            currentUser?.let {
-                                Toast.makeText(context, "Successful", Toast.LENGTH_LONG).show()
-                                signedInLayout.visibility = View.VISIBLE
-                                signedOutLayout.visibility = View.GONE
-                                registerLayout.visibility = View.GONE
-
-                                binding.textUserEmail.text = currentUser.email
-                            }
-                        } else {
-                            val errorMessage = signin.exception?.message
-                            Toast.makeText(context, "$errorMessage", Toast.LENGTH_LONG).show()
-                        }
-                    }
-                } else {
-                    Toast.makeText(context, "Invalid email or password.", Toast.LENGTH_LONG).show()
+            when {
+                !credentialsManager.isValidEmail(email) -> {
+                    emailLayout.error = "Invalid email format."
                 }
-            }
-
-            btnRegisterSender.setOnClickListener {
-                backToRegisterOnce = true
-                signedInLayout.visibility = View.GONE
-                signedOutLayout.visibility = View.GONE
-                registerLayout.visibility = View.VISIBLE
-
-                val btnRegister = binding.buttonRegister
-                val btnRegisterBack = binding.buttonRegisterBack
-
-                btnRegister.setOnClickListener {
-
-                    val email = binding.textRegisterMail.text.toString().trim()
-                    val password = binding.textRegisterPassword.text.toString().trim()
-                    val name = binding.textRegisterName.text.toString().trim()
-                    val surname = binding.textRegisterSurname.text.toString().trim()
-                    val phone = binding.textRegisterPhone.text.toString().trim()
-                    val date = binding.editTextRegisterBirthDate.text.toString().trim()
-
-                    if (credentialsManager.isValidEmail(email) &&
-                        credentialsManager.isValidPassword(password) &&
-                        name.isNotEmpty() && surname.isNotEmpty() &&
-                        phone.isNotEmpty() && date.isNotEmpty()
-                    ) {
-                        auth.createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener { register ->
-                                if (register.isSuccessful) {
-                                    val newUser = auth.currentUser
-                                    newUser?.let {
-                                        val userId = it.uid
-                                        val userData = UserData(email, name, surname, phone, date)
-                                        usersRef.child(userId).setValue(userData)
-                                        Toast.makeText(context, "Successful", Toast.LENGTH_LONG).show()
-                                        signedInLayout.visibility = View.VISIBLE
-                                        signedOutLayout.visibility = View.GONE
-                                        registerLayout.visibility = View.GONE
-
-                                        binding.textUserEmail.text = newUser.email
-                                    }
-                                } else {
-                                    val errorMessage = register.exception?.message
-                                    Toast.makeText(context, "$errorMessage", Toast.LENGTH_LONG).show()
-                                }
-                            }
-                    } else {
-                        Toast.makeText(context, "Please fill in all fields.", Toast.LENGTH_LONG).show()
-                    }
+                !credentialsManager.isValidPassword(password) -> {
+                    passwordLayout.error = "Password cannot be empty."
                 }
-
-                btnRegisterBack.setOnClickListener {
-                    signedInLayout.visibility = View.GONE
-                    signedOutLayout.visibility = View.VISIBLE
-                    registerLayout.visibility = View.GONE
+                credentialsManager.login(email, password) -> {
+                    startActivity(Intent(requireContext(), MainActivity::class.java))
+                }
+                else -> {
+                    emailLayout.error = "Invalid credentials."
                 }
             }
         }
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                when {
-                    registerLayout.visibility == View.VISIBLE -> {
-                        registerLayout.visibility = View.GONE
-                        signedOutLayout.visibility = View.VISIBLE
-                        signedInLayout.visibility = View.GONE
-                    }
-                    signedOutLayout.visibility == View.VISIBLE -> {
-                        if (backToRegisterOnce) {
-                            registerLayout.visibility = View.VISIBLE
-                            signedOutLayout.visibility = View.GONE
-                            signedInLayout.visibility = View.GONE
-                            backToRegisterOnce = false
-                        } else {
-                            isEnabled = false
-                            requireActivity().onBackPressedDispatcher.onBackPressed()
-                        }
-                    }
-                    else -> {
-                        isEnabled = false
-                        requireActivity().onBackPressedDispatcher.onBackPressed()
-                    }
-                }
+        binding.buttonRegisterSender.setOnClickListener {
+            binding.layoutRegister.visibility = View.VISIBLE
+            binding.layoutSignedOut.visibility = View.GONE
+        }
+
+        binding.buttonRegister.setOnClickListener {
+            val email = binding.textRegisterMail.text.toString().trim()
+            val password = binding.textRegisterPassword.text.toString().trim()
+
+            val message = credentialsManager.register(email, password)
+            if (message == "Registration successful") {
+                binding.layoutRegister.visibility = View.GONE
+                binding.layoutSignedOut.visibility = View.VISIBLE
+            } else {
+                binding.textRegisterMailLayout.error = message
             }
-        })
+        }
     }
 }
